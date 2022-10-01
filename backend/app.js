@@ -4,6 +4,8 @@ const express = require("express");
 // Crear la constant app(la nostra aplicació) buida cridant el métode express.
 const app = express();
 
+// Cette application Express contient quatre éléments de middleware :
+
 // le premier enregistre « Requête reçue ! » dans la console et passe l'exécution ;
 app.use((req, res, next) => {
   console.log("Requête reçue !");
