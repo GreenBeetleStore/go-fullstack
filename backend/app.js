@@ -1,37 +1,51 @@
-// Importar express.
 const express = require("express");
 
-// Crear la constant app(la nostra aplicació) buida cridant el métode express.
 const app = express();
 
-// Cette application Express contient quatre éléments de middleware :
+app.use(express.json());
 
-// le premier enregistre « Requête reçue ! » dans la console et passe l'exécution ;
 app.use((req, res, next) => {
-  console.log("Requête reçue !");
-  // Fer la crida a next per que envíe a la següent.
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  );
   next();
 });
 
-// le deuxième ajoute un code d'état 201 à la réponse et passe l'exécution ;
-app.use((req, res, next) => {
-  // Canviem l'status de la requête a (201:created).
-  res.status(201);
-  next();
+app.post("/api/stuff", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({
+    message: "Objet créé !",
+  });
 });
 
-// le troisième envoie la réponse JSON et passe l'exécution ;
-// Utilitar el métode app.use que rebrà dintre la funció els arguments(req, res).
-app.use((req, res, next) => {
-  // Utilitzem l'objecte reponse amb el métode json
-  res.json({ message: "Votre requête a bien été reçue !" });
-  next();
+app.get("/api/stuff", (req, res, next) => {
+  const stuff = [
+    {
+      _id: "oeihfzeoi",
+      title: "Mon premier objet",
+      description: "Les infos de mon premier objet",
+      imageUrl:
+        "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
+      price: 4900,
+      userId: "qsomihvqios",
+    },
+    {
+      _id: "oeihfzeomoihi",
+      title: "Mon deuxième objet",
+      description: "Les infos de mon deuxième objet",
+      imageUrl:
+        "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
+      price: 2900,
+      userId: "qsomihvqios",
+    },
+  ];
+  res.status(200).json(stuff);
 });
 
-// le dernier élément de middleware enregistre « Réponse envoyée avec succès ! » dans la console.
-app.use((req, res) => {
-  console.log("Réponse envoyée avec succès !");
-});
-
-// Exportem aquesta aplicació.
 module.exports = app;
