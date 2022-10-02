@@ -20,7 +20,6 @@ const storage = multer.diskStorage({
 
 module.exports = multer({ storage: storage }).single("image");
 
-
 /** Dans ce middleware :
 
 1. Nous créons une constante storage , à passer à multer comme configuration, qui contient la logique nécessaire pour indiquer à multer où enregistrer les fichiers entrants :
