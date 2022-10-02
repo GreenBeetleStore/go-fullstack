@@ -53,6 +53,14 @@ app.put("/api/stuff/:id", (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
+/** Chapitre 11. Suppression d'un Thing.
+ * La méthode deleteOne() de notre modèle fonctionne comme findOne() et updateOne() dans le sens où nous lui passons un objet correspondant au document à supprimer. Nous envoyons ensuite une réponse de réussite ou d'échec au front-end. */
+app.delete("/api/stuff/:id", (req, res, next) => {
+  Thing.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
 /** Chapitre 10. Récupération de la liste de Things en vente.
  * Nous utilisons la méthode find() dans notre modèle Mongoose afin de renvoyer un tableau contenant tous les Things dans notre base de données. À présent, si vous ajoutez un Thing , il doit s'afficher immédiatement sur votre page d'articles en vente. */
 app.get("/api/stuff", (req, res, next) => {
